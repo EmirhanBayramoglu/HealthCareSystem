@@ -23,5 +23,8 @@ namespace HealthCareSystem.Models
             Family
         }
 
+        public ICollection<Patients> Patient { get; set; }
+        public ICollection<Appointments> Appointment { get; set; }
+
     }
 }

@@ -12,7 +12,8 @@ namespace HealthCareSystem.Models
 
         [Required]
         [ForeignKey("Patients")]
-        public int PatientName { get; set; }
+        public int PatientId { get; set; }
+        public virtual Patients Patient { get; set; }
 
         [Required]
         [ForeignKey("Doctors")]
@@ -23,7 +24,11 @@ namespace HealthCareSystem.Models
         [Required]
         public DateTime AppointmentDate { get; set; }
 
-        public ICollection<Medicines> MedicineList { get; set; }
+        [ForeignKey("Prescriptio")]
+        public int prescriptionId { get; set; }
+
+        public virtual Prescription prescription { get; set; }
+        //public ICollection<Medicines> MedicineList { get; set; }
 
         [Required]
         public string State { get; set; }

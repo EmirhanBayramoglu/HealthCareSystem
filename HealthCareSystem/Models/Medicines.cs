@@ -10,5 +10,6 @@ namespace HealthCareSystem.Models
 
         [Required]
         public string MedicineName { get; set; }
+        public ICollection<Prescription> Prescription { get; set; }
     }
 }

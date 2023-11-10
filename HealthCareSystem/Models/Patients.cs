@@ -18,10 +18,11 @@ namespace HealthCareSystem.Models
 
         [Required]
         [ForeignKey("Doctors")]
-        public string FamilyDoctor { get; set; }
+        public int DoctorId { get; set; }
 
         public virtual Doctors Doctor { get; set; }
 
         public ICollection<Appointments> Appointment { get; set; }
+
     }
 }
