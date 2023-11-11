@@ -1,15 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthCareSystem.Models
 {
     public class Prescription
     {
-        public int prescriptionId { get; set; }
-        [ForeignKey("Medicines")]
-        public ICollection<Medicines> MedicineId { get; set; }
 
-        public virtual Medicines Medicine { get; set; }
+        [Key]
+        [Required]
+        public int PrescriptionId { get; set; }
+        
+        [Required]
+        public string Medicines { get; set; }
 
-        public ICollection<Appointments> Appointment { get; set; }
+        public ICollection<Appointments> Appointments { get; set; }
     }
 }

@@ -7,8 +7,9 @@ namespace HealthCareSystem.Models
     {
         [Key]
         [Required]
-        [Range(10000000000, 99999999999, ErrorMessage = "Değer sınırları dışında")]
-        public long TcNumber { get; set; }
+        [MinLength(11)]
+        [MaxLength(11)]
+        public string TcNumber { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -20,9 +21,9 @@ namespace HealthCareSystem.Models
         [ForeignKey("Doctors")]
         public int DoctorId { get; set; }
 
-        public virtual Doctors Doctor { get; set; }
+        public virtual Doctors Doctors { get; set; }
 
-        public ICollection<Appointments> Appointment { get; set; }
+        public ICollection<Appointments> Appointments { get; set; }
 
     }
 }

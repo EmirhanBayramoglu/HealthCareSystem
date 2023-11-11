@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HealthCareSystem.Models
 {
@@ -12,10 +13,10 @@ namespace HealthCareSystem.Models
         public DoctorTypes DoctorType { get; set; }
 
         [Required]
-        public int Doctor_Name { get; set; }
+        public string DoctorName { get; set; }
 
         [Required]
-        public int Doctor_Surname { get; set; }
+        public string DoctorSurname { get; set; }
 
         public enum DoctorTypes
         {
@@ -23,8 +24,7 @@ namespace HealthCareSystem.Models
             Family
         }
 
-        public ICollection<Patients> Patient { get; set; }
-        public ICollection<Appointments> Appointment { get; set; }
-
+        public ICollection<Patients> Patients { get; set; }
+        public ICollection<Appointments> Appointments { get; set; }
     }
 }

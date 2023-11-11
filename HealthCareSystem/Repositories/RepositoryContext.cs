@@ -12,42 +12,56 @@ namespace HealthCareSystem.Repositories
         }
 
         public DbSet<Prescription> Prescription { get; set; }
-        public DbSet<Patients> Patient { get; set; }
-        public DbSet<Medicines> Medicine { get; set; }
-        public DbSet<Doctors> Doctor { get; set; }
-        public DbSet<Appointments> Appointment { get; set; }
+        public DbSet<Patients> Patients { get; set; }
+        public DbSet<Medicines> Medicines { get; set; }
+        public DbSet<Doctors> Doctors { get; set; }
+        public DbSet<Appointments> Appointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Örnek ilişkiler
-            modelBuilder.Entity<Prescription>()
-                .HasOne(p => p.Medicine)
-                .WithMany(pa => pa.Prescription)
-                .HasForeignKey(p => p.MedicineId);
 
-            modelBuilder.Entity<Patients>()
-                .HasOne(p => p.Doctor)
-                .WithMany(d => d.Patient)
-                .HasForeignKey(p => p.DoctorId);
+            if (modelBuilder == null)
+                throw new ArgumentNullException("modelBuilder");
 
-            modelBuilder.Entity<Appointments>()
-                .HasOne(a => a.Patient)
-                .WithMany(pa => pa.Appointment)
-                .HasForeignKey(a => a.PatientId);
+            // for the other conventions, we do a metadata model loop
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                // equivalent of modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+                entityType.SetTableName(entityType.DisplayName());
 
-            modelBuilder.Entity<Appointments>()
-                .HasOne(a => a.Doctor)
-                .WithMany(d => d.Appointment)
-                .HasForeignKey(a => a.DoctorId);
-
-            modelBuilder.Entity<Appointments>()
-                .HasOne(a => a.prescription)
-                .WithMany(d => d.Appointment)
-                .HasForeignKey(a => a.prescriptionId);
-
-            // Diğer ilişkileri de buraya ekleyebilirsiniz.
+                // equivalent of modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+                entityType.GetForeignKeys()
+                    .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade)
+                    .ToList()
+                    .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
+            }
 
             base.OnModelCreating(modelBuilder);
+
+            /* modelBuilder.Entity<Patients>()
+                 .HasOne(p => p.Doctors)
+                 .WithMany(d => d.Patients)
+                 .HasForeignKey(p => p.DoctorId);
+
+             modelBuilder.Entity<Appointments>()
+                 .HasOne(a => a.Patients)
+                 .WithMany(pa => pa.Appointments)
+                 .HasForeignKey(a => a.TcNumber);
+
+             modelBuilder.Entity<Appointments>()
+                 .HasOne(a => a.Doctors)
+                 .WithMany(d => d.Appointments)
+                 .HasForeignKey(a => a.DoctorId);
+
+             modelBuilder.Entity<Appointments>()
+                 .HasOne(a => a.Prescription)
+                 .WithMany(p => p.Appointments)
+                 .HasForeignKey(a => a.PrescriptionId);
+
+             // Diğer ilişkileri de buraya ekleyebilirsiniz.
+
+             base.OnModelCreating(modelBuilder);*/
         }
     }
 }
