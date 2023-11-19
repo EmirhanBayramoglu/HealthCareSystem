@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthCareSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231111102010_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231119200243_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,9 @@ namespace HealthCareSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"), 1L, 1);
 
+                    b.Property<int>("AppoStatus")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
@@ -41,10 +44,6 @@ namespace HealthCareSystem.Migrations
                     b.Property<int>("PrescriptionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TcNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(11)");
@@ -53,7 +52,8 @@ namespace HealthCareSystem.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("PrescriptionId");
+                    b.HasIndex("PrescriptionId")
+                        .IsUnique();
 
                     b.HasIndex("TcNumber");
 
@@ -77,6 +77,9 @@ namespace HealthCareSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DoctorType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("DoctorId");
@@ -137,7 +140,16 @@ namespace HealthCareSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PatientsTcNumber")
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("TcNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PrescriptionId");
+
+                    b.HasIndex("PatientsTcNumber");
 
                     b.ToTable("Prescription");
                 });
@@ -151,8 +163,8 @@ namespace HealthCareSystem.Migrations
                         .IsRequired();
 
                     b.HasOne("HealthCareSystem.Models.Prescription", "Prescription")
-                        .WithMany("Appointments")
-                        .HasForeignKey("PrescriptionId")
+                        .WithOne("Appointments")
+                        .HasForeignKey("HealthCareSystem.Models.Appointments", "PrescriptionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -180,6 +192,15 @@ namespace HealthCareSystem.Migrations
                     b.Navigation("Doctors");
                 });
 
+            modelBuilder.Entity("HealthCareSystem.Models.Prescription", b =>
+                {
+                    b.HasOne("HealthCareSystem.Models.Patients", "Patients")
+                        .WithMany("Prescription")
+                        .HasForeignKey("PatientsTcNumber");
+
+                    b.Navigation("Patients");
+                });
+
             modelBuilder.Entity("HealthCareSystem.Models.Doctors", b =>
                 {
                     b.Navigation("Appointments");
@@ -190,11 +211,14 @@ namespace HealthCareSystem.Migrations
             modelBuilder.Entity("HealthCareSystem.Models.Patients", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Prescription");
                 });
 
             modelBuilder.Entity("HealthCareSystem.Models.Prescription", b =>
                 {
-                    b.Navigation("Appointments");
+                    b.Navigation("Appointments")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

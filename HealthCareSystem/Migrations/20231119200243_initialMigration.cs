@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HealthCareSystem.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace HealthCareSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DoctorType = table.Column<int>(type: "int", nullable: false),
                     DoctorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DoctorSurname = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DoctorSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,19 +36,6 @@ namespace HealthCareSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medicines", x => x.MedicineId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Prescription",
-                columns: table => new
-                {
-                    PrescriptionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Medicines = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Prescription", x => x.PrescriptionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,6 +59,26 @@ namespace HealthCareSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Prescription",
+                columns: table => new
+                {
+                    PrescriptionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TcNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PatientsTcNumber = table.Column<string>(type: "nvarchar(11)", nullable: true),
+                    Medicines = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prescription", x => x.PrescriptionId);
+                    table.ForeignKey(
+                        name: "FK_Prescription_Patients_PatientsTcNumber",
+                        column: x => x.PatientsTcNumber,
+                        principalTable: "Patients",
+                        principalColumn: "TcNumber");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Appointments",
                 columns: table => new
                 {
@@ -80,7 +88,7 @@ namespace HealthCareSystem.Migrations
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PrescriptionId = table.Column<int>(type: "int", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AppoStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,7 +121,8 @@ namespace HealthCareSystem.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_PrescriptionId",
                 table: "Appointments",
-                column: "PrescriptionId");
+                column: "PrescriptionId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_TcNumber",
@@ -124,6 +133,11 @@ namespace HealthCareSystem.Migrations
                 name: "IX_Patients_DoctorId",
                 table: "Patients",
                 column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prescription_PatientsTcNumber",
+                table: "Prescription",
+                column: "PatientsTcNumber");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -135,10 +149,10 @@ namespace HealthCareSystem.Migrations
                 name: "Medicines");
 
             migrationBuilder.DropTable(
-                name: "Patients");
+                name: "Prescription");
 
             migrationBuilder.DropTable(
-                name: "Prescription");
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Doctors");

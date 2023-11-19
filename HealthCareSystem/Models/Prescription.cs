@@ -10,10 +10,12 @@ namespace HealthCareSystem.Models
         [Key]
         [Required]
         public int PrescriptionId { get; set; }
-        
+        [Required]
+        public string TcNumber { get; set; }
+        public virtual Patients Patients { get; set; }
         [Required]
         public string Medicines { get; set; }
 
-        public ICollection<Appointments> Appointments { get; set; }
+        public Appointments Appointments { get; set; }
     }
 }

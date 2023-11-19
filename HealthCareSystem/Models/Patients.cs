@@ -24,6 +24,7 @@ namespace HealthCareSystem.Models
         public virtual Doctors Doctors { get; set; }
 
         public ICollection<Appointments> Appointments { get; set; }
+        public ICollection<Prescription> Prescription { get; set; }
 
     }
 }

@@ -30,6 +30,13 @@ namespace HealthCareSystem.Models
         //public ICollection<Medicines> MedicineList { get; set; }
 
         [Required]
-        public string State { get; set; }
+        public AppointmentStatus AppoStatus { get; set; }
+
+        public enum AppointmentStatus
+        {
+            Pasif,
+            Aktif
+        }
+
     }
 }
