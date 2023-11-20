@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Dto\NewFolder\" />
   </ItemGroup>
 
 </Project>
