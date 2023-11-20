@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HealthCareSystem.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class initMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,8 +62,7 @@ namespace HealthCareSystem.Migrations
                 name: "Prescription",
                 columns: table => new
                 {
-                    PrescriptionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PrescriptionId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     TcNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PatientsTcNumber = table.Column<string>(type: "nvarchar(11)", nullable: true),
                     Medicines = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -82,12 +81,12 @@ namespace HealthCareSystem.Migrations
                 name: "Appointments",
                 columns: table => new
                 {
-                    AppointmentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppointmentId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     TcNumber = table.Column<string>(type: "nvarchar(11)", nullable: false),
+                    AppointmentType = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PrescriptionId = table.Column<int>(type: "int", nullable: false),
+                    PrescriptionId = table.Column<string>(type: "nvarchar(11)", nullable: false),
                     AppoStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -114,6 +113,12 @@ namespace HealthCareSystem.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Appointments_AppointmentId",
+                table: "Appointments",
+                column: "AppointmentId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Appointments_DoctorId",
                 table: "Appointments",
                 column: "DoctorId");
@@ -138,6 +143,12 @@ namespace HealthCareSystem.Migrations
                 name: "IX_Prescription_PatientsTcNumber",
                 table: "Prescription",
                 column: "PatientsTcNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prescription_PrescriptionId",
+                table: "Prescription",
+                column: "PrescriptionId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

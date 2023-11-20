@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthCareSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231119200243_initialMigration")]
-    partial class initialMigration
+    [Migration("20231120073027_initMigration")]
+    partial class initMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,9 @@ namespace HealthCareSystem.Migrations
 
             modelBuilder.Entity("HealthCareSystem.Models.Appointments", b =>
                 {
-                    b.Property<int>("AppointmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"), 1L, 1);
+                    b.Property<string>("AppointmentId")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<int>("AppoStatus")
                         .HasColumnType("int");
@@ -38,17 +36,24 @@ namespace HealthCareSystem.Migrations
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("AppointmentType")
+                        .HasColumnType("int");
+
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PrescriptionId")
-                        .HasColumnType("int");
+                    b.Property<string>("PrescriptionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("TcNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(11)");
 
                     b.HasKey("AppointmentId");
+
+                    b.HasIndex("AppointmentId")
+                        .IsUnique();
 
                     b.HasIndex("DoctorId");
 
@@ -130,11 +135,9 @@ namespace HealthCareSystem.Migrations
 
             modelBuilder.Entity("HealthCareSystem.Models.Prescription", b =>
                 {
-                    b.Property<int>("PrescriptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrescriptionId"), 1L, 1);
+                    b.Property<string>("PrescriptionId")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("Medicines")
                         .IsRequired()
@@ -150,6 +153,9 @@ namespace HealthCareSystem.Migrations
                     b.HasKey("PrescriptionId");
 
                     b.HasIndex("PatientsTcNumber");
+
+                    b.HasIndex("PrescriptionId")
+                        .IsUnique();
 
                     b.ToTable("Prescription");
                 });

@@ -1,5 +1,6 @@
 ﻿using HealthCareSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace HealthCareSystem.Repositories
 {
@@ -19,6 +20,15 @@ namespace HealthCareSystem.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Appointments>()
+            .HasIndex(e => e.AppointmentId)
+            .IsUnique(); // Değeri benzersiz yap
+
+            modelBuilder.Entity<Prescription>()
+            .HasIndex(e => e.PrescriptionId)
+            .IsUnique(); // Değeri benzersiz yap
+
             // Örnek ilişkiler
 
             if (modelBuilder == null)
@@ -39,29 +49,7 @@ namespace HealthCareSystem.Repositories
 
             base.OnModelCreating(modelBuilder);
 
-            /* modelBuilder.Entity<Patients>()
-                 .HasOne(p => p.Doctors)
-                 .WithMany(d => d.Patients)
-                 .HasForeignKey(p => p.DoctorId);
-
-             modelBuilder.Entity<Appointments>()
-                 .HasOne(a => a.Patients)
-                 .WithMany(pa => pa.Appointments)
-                 .HasForeignKey(a => a.TcNumber);
-
-             modelBuilder.Entity<Appointments>()
-                 .HasOne(a => a.Doctors)
-                 .WithMany(d => d.Appointments)
-                 .HasForeignKey(a => a.DoctorId);
-
-             modelBuilder.Entity<Appointments>()
-                 .HasOne(a => a.Prescription)
-                 .WithMany(p => p.Appointments)
-                 .HasForeignKey(a => a.PrescriptionId);
-
-             // Diğer ilişkileri de buraya ekleyebilirsiniz.
-
-             base.OnModelCreating(modelBuilder);*/
+            
         }
     }
 }

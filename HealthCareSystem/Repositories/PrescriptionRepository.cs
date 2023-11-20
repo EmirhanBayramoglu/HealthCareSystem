@@ -26,7 +26,7 @@ namespace HealthCareSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeletePrescription(int id)
+        public async Task DeletePrescription(string id)
         {
             Prescription prescription = await GetOnePrescriptionById(id);
             if (prescription == null)
@@ -41,7 +41,7 @@ namespace HealthCareSystem.Repositories
             return await _context.Prescription.OrderBy(x => x.PrescriptionId).ToListAsync();
         }
 
-        public async Task<Prescription> GetOnePrescriptionById(int id)
+        public async Task<Prescription> GetOnePrescriptionById(string id)
         {
             return await _context.Prescription.FirstOrDefaultAsync(x => x.PrescriptionId == id);
         }

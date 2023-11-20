@@ -27,7 +27,7 @@ namespace HealthCareSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAppointment(int id)
+        public async Task DeleteAppointment(string id)
         {
             Appointments appointment = await GetOneAppointmentById(id);
             if (appointment == null)
@@ -42,7 +42,7 @@ namespace HealthCareSystem.Repositories
             return await _context.Appointments.OrderBy(x => x.AppointmentId).ToListAsync();
         }
 
-        public async Task<Appointments> GetOneAppointmentById(int appointmentId)
+        public async Task<Appointments> GetOneAppointmentById(string appointmentId)
         {
             return await _context.Appointments.FirstOrDefaultAsync(x => x.AppointmentId == appointmentId);
         }
