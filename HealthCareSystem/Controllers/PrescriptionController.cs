@@ -1,0 +1,59 @@
+﻿using AutoMapper;
+using HealthCareSystem.Dto.MedicineDto;
+using HealthCareSystem.Dto.PrescriptionDto;
+using HealthCareSystem.Models;
+using HealthCareSystem.Repositories.Contracts;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HealthCareSystem.Controllers
+{
+    public class PrescriptionController : ControllerBase
+    {
+
+        private readonly IPrescriptionRepository _prescriptionRepository;
+        private readonly IMapper _mapper;
+
+        public PrescriptionController(IPrescriptionRepository prescriptionRepository, IMapper mapper)
+        {
+            _prescriptionRepository = prescriptionRepository;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAllPrescription()
+        {
+            var items = await _prescriptionRepository.GetAllPresctions();
+
+            return Ok(_mapper.Map<IEnumerable<Prescription>>(items));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Medicines>> GetOnePrescriptionById(string id)
+        {
+            var item = await _prescriptionRepository.GetOnePrescriptionById(id);
+
+            return Ok(_mapper.Map<Prescription>(item));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Prescription>> AddPrescription([FromBody] PrescriptionDto prescriptionDto)
+        {
+            var prescription = _mapper.Map<Prescription>(prescriptionDto);
+            await _prescriptionRepository.AddPrescription(prescription);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdatePrescription(string id, PrescriptionDto prescriptionDto)
+        {
+            var item = await _prescriptionRepository.GetOnePrescriptionById(id);
+
+            _mapper.Map(prescriptionDto, item);
+
+            await _prescriptionRepository.UpdatePrescription(item);
+
+            return Ok();
+        }
+
+    }
+}
