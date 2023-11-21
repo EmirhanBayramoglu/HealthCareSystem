@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthCareSystem.Controllers
 {
+    [Route("api/medicine")]
+    [ApiController]
     public class MedicineController : ControllerBase
     {
 

@@ -37,7 +37,7 @@ namespace HealthCareSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Appointments>> GetAllPatients()
+        public async Task<IEnumerable<Appointments>> GetAllAppointments()
         {
             return await _context.Appointments.OrderBy(x => x.AppointmentId).ToListAsync();
         }

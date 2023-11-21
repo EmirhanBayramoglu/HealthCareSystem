@@ -90,6 +90,33 @@ namespace HealthCareSystem.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("HealthCareSystem.Models.FamillyDoctorRecord", b =>
+                {
+                    b.Property<int>("RecordNo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecordNo"), 1L, 1);
+
+                    b.Property<DateTime>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TcNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(11)");
+
+                    b.HasKey("RecordNo");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("TcNumber");
+
+                    b.ToTable("FamillyDoctorRecord");
+                });
+
             modelBuilder.Entity("HealthCareSystem.Models.Medicines", b =>
                 {
                     b.Property<int>("MedicineId")
@@ -183,6 +210,25 @@ namespace HealthCareSystem.Migrations
                     b.Navigation("Patients");
 
                     b.Navigation("Prescription");
+                });
+
+            modelBuilder.Entity("HealthCareSystem.Models.FamillyDoctorRecord", b =>
+                {
+                    b.HasOne("HealthCareSystem.Models.Doctors", "Doctors")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HealthCareSystem.Models.Patients", "Patients")
+                        .WithMany()
+                        .HasForeignKey("TcNumber")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Doctors");
+
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("HealthCareSystem.Models.Patients", b =>

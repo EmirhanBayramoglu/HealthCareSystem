@@ -4,7 +4,7 @@ namespace HealthCareSystem.Repositories.Contracts
 {
     public interface IAppointmentRepository
     {
-        Task<IEnumerable<Appointments>> GetAllPatients();
+        Task<IEnumerable<Appointments>> GetAllAppointments();
         Task<Appointments> GetOneAppointmentById(string appointmentId);
         public Task AddAppointment(Appointments appointment);
         public Task UpdateAppointment(Appointments appointment);

@@ -45,8 +45,10 @@ namespace HealthCareSystem.Models
 
         public enum AppointmentStatus
         {
-            Pasif,
-            Aktif
+            Waiting,
+            Aktif,
+            Ended,
+            Canceled
         }
 
         public enum AppointmentTypes

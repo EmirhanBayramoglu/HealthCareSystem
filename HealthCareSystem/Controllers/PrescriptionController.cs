@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthCareSystem.Controllers
 {
+    [Route("api/prescription")]
+    [ApiController]
     public class PrescriptionController : ControllerBase
     {
 
@@ -28,7 +30,7 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Medicines>> GetOnePrescriptionById(string id)
+        public async Task<ActionResult<Prescription>> GetOnePrescriptionById(string id)
         {
             var item = await _prescriptionRepository.GetOnePrescriptionById(id);
 

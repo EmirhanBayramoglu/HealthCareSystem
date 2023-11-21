@@ -28,11 +28,12 @@ namespace HealthCareSystem.Repositories
 
         public async Task DeleteDoctor(int id)
         {
-            Doctors doctor = await GetOneDoctorById(id);
+            var doctor = await GetOneDoctorById(id);
             if (doctor == null)
                 throw new Exception("Doctor is null.");
 
-            _context.Doctors.Remove(doctor);
+            doctor.Status = 0;
+            _context.Doctors.Update(doctor);
             await _context.SaveChangesAsync();
         }
 

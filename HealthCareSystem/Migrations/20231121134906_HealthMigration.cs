@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HealthCareSystem.Migrations
 {
-    public partial class initMigration : Migration
+    public partial class HealthMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,6 +55,33 @@ namespace HealthCareSystem.Migrations
                         column: x => x.DoctorId,
                         principalTable: "Doctors",
                         principalColumn: "DoctorId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FamillyDoctorRecord",
+                columns: table => new
+                {
+                    RecordNo = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TcNumber = table.Column<string>(type: "nvarchar(11)", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FamillyDoctorRecord", x => x.RecordNo);
+                    table.ForeignKey(
+                        name: "FK_FamillyDoctorRecord_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "DoctorId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FamillyDoctorRecord_Patients_TcNumber",
+                        column: x => x.TcNumber,
+                        principalTable: "Patients",
+                        principalColumn: "TcNumber",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -135,6 +162,16 @@ namespace HealthCareSystem.Migrations
                 column: "TcNumber");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FamillyDoctorRecord_DoctorId",
+                table: "FamillyDoctorRecord",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FamillyDoctorRecord_TcNumber",
+                table: "FamillyDoctorRecord",
+                column: "TcNumber");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patients_DoctorId",
                 table: "Patients",
                 column: "DoctorId");
@@ -155,6 +192,9 @@ namespace HealthCareSystem.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Appointments");
+
+            migrationBuilder.DropTable(
+                name: "FamillyDoctorRecord");
 
             migrationBuilder.DropTable(
                 name: "Medicines");
