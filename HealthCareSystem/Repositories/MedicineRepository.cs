@@ -19,7 +19,7 @@ namespace HealthCareSystem.Repositories
         {
             if (medicine == null)
             {
-                throw new Exception("Appointment is null.");
+                throw new Exception("Medicine is null.");
             }
 
             await _context.Medicines.AddAsync(medicine);

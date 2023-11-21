@@ -20,7 +20,7 @@ namespace HealthCareSystem.Repositories
             {
                 throw new Exception("Doctor is null.");
             }
-
+            doctor.Status = "Aktif";
             await _context.Doctors.AddAsync(doctor);
 
             await _context.SaveChangesAsync();
@@ -32,7 +32,7 @@ namespace HealthCareSystem.Repositories
             if (doctor == null)
                 throw new Exception("Doctor is null.");
 
-            doctor.Status = 0;
+            doctor.Status = "Pasif";
             _context.Doctors.Update(doctor);
             await _context.SaveChangesAsync();
         }

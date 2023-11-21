@@ -15,10 +15,10 @@ namespace HealthCareSystem.Migrations
                 {
                     DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorType = table.Column<int>(type: "int", nullable: false),
+                    DoctorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,11 +110,11 @@ namespace HealthCareSystem.Migrations
                 {
                     AppointmentId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     TcNumber = table.Column<string>(type: "nvarchar(11)", nullable: false),
-                    AppointmentType = table.Column<int>(type: "int", nullable: false),
+                    AppointmentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PrescriptionId = table.Column<string>(type: "nvarchar(11)", nullable: false),
-                    AppoStatus = table.Column<int>(type: "int", nullable: false)
+                    AppoStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

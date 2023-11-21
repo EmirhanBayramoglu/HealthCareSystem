@@ -11,7 +11,7 @@ namespace HealthCareSystem.Models
         public int DoctorId { get; set; }
 
         [Required]
-        public DoctorTypes DoctorType { get; set; }
+        public string DoctorType { get; set; }
 
         [Required]
         public string DoctorName { get; set; }
@@ -20,19 +20,19 @@ namespace HealthCareSystem.Models
         public string DoctorSurname { get; set; }
 
         [Required]
-        public DoctorStatus Status { get; set; }
+        public string Status { get; set; }
 
-        public enum DoctorStatus
+        /*public enum DoctorStatus
         {
             Pasif,
             Aktif
-        }
+        }*/
 
-        public enum DoctorTypes
+        /*public enum DoctorTypes
         {
             General,
             Family
-        }
+        }*/
 
         [JsonIgnore]
         public ICollection<Patients> Patients { get; set; }

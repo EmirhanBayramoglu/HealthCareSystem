@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthCareSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231121134906_HealthMigration")]
+    [Migration("20231121184006_HealthMigration")]
     partial class HealthMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,14 +30,16 @@ namespace HealthCareSystem.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<int>("AppoStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("AppoStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AppointmentType")
-                        .HasColumnType("int");
+                    b.Property<string>("AppointmentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
@@ -81,11 +83,13 @@ namespace HealthCareSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DoctorType")
-                        .HasColumnType("int");
+                    b.Property<string>("DoctorType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DoctorId");
 

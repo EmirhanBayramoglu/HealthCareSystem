@@ -22,7 +22,7 @@ namespace HealthCareSystem.Models
         public virtual Patients Patients { get; set; }
 
         [Required]
-        public AppointmentTypes AppointmentType { get; set; }
+        public string AppointmentType { get; set; }
 
         [Required]
         [ForeignKey("Doctors")]
@@ -41,21 +41,21 @@ namespace HealthCareSystem.Models
         public virtual Prescription Prescription { get; set; }
 
         [Required]
-        public AppointmentStatus AppoStatus { get; set; }
+        public string AppoStatus { get; set; }
 
-        public enum AppointmentStatus
+       /* public enum AppointmentStatus
         {
             Waiting,
             Aktif,
             Ended,
             Canceled
-        }
+        }*/
 
-        public enum AppointmentTypes
+        /*public enum AppointmentTypes
         {
             General,
             Family
-        }
+        }*/
 
     }
 }

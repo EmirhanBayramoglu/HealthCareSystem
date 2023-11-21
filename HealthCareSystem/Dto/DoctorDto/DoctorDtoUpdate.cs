@@ -4,7 +4,7 @@ namespace HealthCareSystem.Dto.DoctorDto
 {
     public class DoctorDtoUpdate
     {
-        public DoctorTypes DoctorType { get; set; }
+        public string DoctorType { get; set; }
         public string DoctorName { get; set; }
         public string DoctorSurname { get; set; }
     }

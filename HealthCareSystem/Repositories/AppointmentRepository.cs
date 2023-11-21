@@ -12,7 +12,6 @@ namespace HealthCareSystem.Repositories
         public AppointmentRepository(RepositoryContext context)
         {
             _context = context;
-
         }
 
         public async Task AddAppointment(Appointments appointment)
@@ -21,6 +20,39 @@ namespace HealthCareSystem.Repositories
             {
                 throw new Exception("Appointment is null.");
             }
+            
+            if (appointment.AppointmentType != appointment.Doctors.DoctorType)
+            {
+                throw new Exception("Appointment type and Doctor type is not match.");
+            }
+
+            if ((appointment.DoctorId != appointment.Patients.DoctorId) && appointment.AppointmentType == "Family")
+            {
+                throw new Exception("This doctor is not your family doctor");
+            }
+
+            int hour = appointment.AppointmentDate.Hour;
+            int min = appointment.AppointmentDate.Minute;
+
+            if(hour > 7 &&  hour < 18) 
+            {
+                throw new Exception("Hour must between 7 and 18 (7 and 18 except)");
+                if (min == 0 || min == 30) 
+                {
+                    throw new Exception("Time must be exact hour or half of hour");
+                }
+            }
+
+            var existingAppointmentDate = _context.Appointments.Where(x => x.AppointmentDate == appointment.AppointmentDate 
+                                                                        && x.DoctorId == appointment.DoctorId);
+
+            if (existingAppointmentDate != null)
+            {
+                throw new Exception("There is another appointment at this date.Change doctor or date");
+            }
+
+            appointment.AppoStatus = "Waiting";
+            
 
             await _context.Appointments.AddAsync(appointment);
 
