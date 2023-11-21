@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace HealthCareSystem.Models
 {
@@ -21,9 +22,13 @@ namespace HealthCareSystem.Models
         [ForeignKey("Doctors")]
         public int DoctorId { get; set; }
 
+        [JsonIgnore]
         public virtual Doctors Doctors { get; set; }
-
+        
+        [JsonIgnore]
         public ICollection<Appointments> Appointments { get; set; }
+        
+        [JsonIgnore]
         public ICollection<Prescription> Prescription { get; set; }
 
     }

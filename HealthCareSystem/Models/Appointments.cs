@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using static HealthCareSystem.Models.Doctors;
 
 namespace HealthCareSystem.Models
@@ -16,6 +17,8 @@ namespace HealthCareSystem.Models
         [Required]
         [ForeignKey("Patients")]
         public string TcNumber { get; set; }
+
+        [JsonIgnore]
         public virtual Patients Patients { get; set; }
 
         [Required]
@@ -24,6 +27,8 @@ namespace HealthCareSystem.Models
         [Required]
         [ForeignKey("Doctors")]
         public int DoctorId { get; set; }
+
+        [JsonIgnore]
         public virtual Doctors Doctors { get; set; }
 
         [Required]
@@ -31,6 +36,8 @@ namespace HealthCareSystem.Models
 
         [ForeignKey("Prescription")]
         public string PrescriptionId { get; set; } // Önceki hatalı ad düzeltildi
+
+        [JsonIgnore]
         public virtual Prescription Prescription { get; set; }
 
         [Required]

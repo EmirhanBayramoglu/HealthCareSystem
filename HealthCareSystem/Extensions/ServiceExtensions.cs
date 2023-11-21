@@ -1,6 +1,8 @@
 ﻿using HealthCareSystem.Repositories;
 using HealthCareSystem.Repositories.Contracts;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace HealthCareSystem.Extensions
 {
@@ -9,7 +11,7 @@ namespace HealthCareSystem.Extensions
 
         public static void ConfigureSqlContext(this IServiceCollection services,
             IConfiguration configuration) => services.AddDbContext<RepositoryContext>(options =>
-                                                options.UseSqlServer(configuration.GetConnectionString("HealthCareConnetion")));
+                                                options.UseSqlServer(configuration.GetConnectionString("HealthConnetion")));
 
         public static void ConfigureAppointRepository(this IServiceCollection services) =>
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
@@ -25,7 +27,6 @@ namespace HealthCareSystem.Extensions
 
         public static void ConfigurePrescriptRepository(this IServiceCollection services) =>
             services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
-
 
     }
 }

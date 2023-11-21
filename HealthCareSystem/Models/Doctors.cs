@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HealthCareSystem.Models
 {
@@ -33,7 +34,10 @@ namespace HealthCareSystem.Models
             Family
         }
 
+        [JsonIgnore]
         public ICollection<Patients> Patients { get; set; }
+
+        [JsonIgnore]
         public ICollection<Appointments> Appointments { get; set; }
     }
 }

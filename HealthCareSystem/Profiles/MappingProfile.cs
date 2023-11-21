@@ -24,7 +24,7 @@ namespace HealthCareSystem.Profiles
             CreateMap<Medicines, MedicineDto>().ReverseMap();
 
             CreateMap<PatientDtoUpdate, Patients>().ReverseMap();
-            CreateMap<Patients, PatientDto>().ReverseMap();
+            CreateMap<PatientDto,Patients>();
             CreateMap<PatientDtoInsert, Patients>();
 
             CreateMap<PrescriptionDtoUpdate, Prescription>().ReverseMap();
