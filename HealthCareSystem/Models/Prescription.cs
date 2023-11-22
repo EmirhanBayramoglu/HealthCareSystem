@@ -21,16 +21,10 @@ namespace HealthCareSystem.Models
         [JsonIgnore]
         public virtual Patients Patients { get; set; }
 
-        [Required]
-        public string MedicineId { get; set; }
-
-        [JsonIgnore]
-        public virtual Medicines Medicine { get; set; }
-
         [JsonIgnore]
         public Appointments Appointments { get; set; }
 
         [JsonIgnore]
-        public PrescriptionLists prescriptionList { get; set; }
+        public PrescriptionLists PrescriptionList { get; set; }
     }
 }
