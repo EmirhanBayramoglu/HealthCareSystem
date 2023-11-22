@@ -2,6 +2,6 @@
 {
     public class PrescriptionDtoUpdate
     {
-        public string Medicines { get; set; }
+        public string TcNumber { get; set; }
     }
 }

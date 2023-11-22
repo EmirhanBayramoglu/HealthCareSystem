@@ -1,6 +1,8 @@
 ﻿using HealthCareSystem.Models;
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using System.Text.RegularExpressions;
 
 namespace HealthCareSystem.Repositories
 {
@@ -17,12 +19,9 @@ namespace HealthCareSystem.Repositories
         public async Task AddPrescription(Prescription prescription)
         {
             if (prescription == null)
-            {
                 throw new Exception("Prescription is null.");
-            }
-
+          
             await _context.Prescription.AddAsync(prescription);
-
             await _context.SaveChangesAsync();
         }
 
@@ -48,6 +47,9 @@ namespace HealthCareSystem.Repositories
 
         public async Task UpdatePrescription(Prescription prescription)
         {
+            if (prescription == null)
+                throw new Exception("Prescription is null.");
+
             _context.Prescription.Update(prescription);
 
             await _context.SaveChangesAsync();

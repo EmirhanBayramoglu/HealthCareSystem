@@ -16,6 +16,11 @@ builder.Services.ConfigureDoctorRepository();
 builder.Services.ConfigureMedicineRepository();
 builder.Services.ConfigurePatientRepository();
 builder.Services.ConfigurePrescriptRepository();
+builder.Services.ConfigureRecordRepository();
+builder.Services.ConfigurePatientToDoctorRepository();
+builder.Services.ConfigurePatientToRecordRepository();
+builder.Services.ConfigurePrescriptionListRepository();
+
 
 var app = builder.Build();
 

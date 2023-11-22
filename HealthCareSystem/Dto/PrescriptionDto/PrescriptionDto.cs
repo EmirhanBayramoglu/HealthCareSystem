@@ -4,6 +4,5 @@
     {
         public string PrescriptionId { get; set; }
         public string TcNumber { get; set; }
-        public string Medicines { get; set; }
     }
 }

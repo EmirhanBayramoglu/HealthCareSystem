@@ -10,6 +10,7 @@ namespace HealthCareSystem.Models
         [Required]
         [MinLength(11)]
         [MaxLength(11)]
+        [RegularExpression(@"^[0-9]+$")]
         public string TcNumber { get; set; }
 
         [Required]
@@ -28,8 +29,7 @@ namespace HealthCareSystem.Models
         [JsonIgnore]
         public ICollection<Appointments> Appointments { get; set; }
         
-        [JsonIgnore]
-        public ICollection<Prescription> Prescription { get; set; }
+        
 
     }
 }

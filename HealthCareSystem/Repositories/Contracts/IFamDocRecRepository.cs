@@ -2,7 +2,7 @@
 
 namespace HealthCareSystem.Repositories.Contracts
 {
-    public interface IFamDocHistRepository
+    public interface IFamDocRecRepository
     {
         Task<IEnumerable<FamillyDoctorRecord>> GetAllRecords();
         public Task AddRecords(FamillyDoctorRecord record);

@@ -13,15 +13,24 @@ namespace HealthCareSystem.Models
         [MaxLength(11), MinLength(11)]
         [RegularExpression(@"^[a-zA-Z0-9]+$")]
         public string PrescriptionId { get; set; }
-        
+
         [Required]
+        [ForeignKey("Patients")]
         public string TcNumber { get; set; }
+
+        [JsonIgnore]
         public virtual Patients Patients { get; set; }
-        
+
         [Required]
-        public string Medicines { get; set; }
-        
+        public string MedicineId { get; set; }
+
+        [JsonIgnore]
+        public virtual Medicines Medicine { get; set; }
+
         [JsonIgnore]
         public Appointments Appointments { get; set; }
+
+        [JsonIgnore]
+        public PrescriptionLists prescriptionList { get; set; }
     }
 }

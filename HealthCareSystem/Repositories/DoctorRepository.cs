@@ -44,7 +44,14 @@ namespace HealthCareSystem.Repositories
 
         public async Task<Doctors> GetOneDoctorById(int doctorId)
         {
-            return await _context.Doctors.FirstOrDefaultAsync(x => x.DoctorId == doctorId);
+            var item = await _context.Doctors.FirstOrDefaultAsync(x => x.DoctorId == doctorId);
+
+            if (item == null)
+            {
+                throw new NullReferenceException("Açıklama: Bu nesne null olduğu için erişim yapılamadı.");
+            }
+
+            return item;
         }
 
         public async Task UpdateDoctor(Doctors doctor)

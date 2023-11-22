@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthCareSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231121184006_HealthMigration")]
+    [Migration("20231122105314_HealthMigration")]
     partial class HealthMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

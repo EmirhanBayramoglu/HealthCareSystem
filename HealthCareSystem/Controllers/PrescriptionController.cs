@@ -38,7 +38,7 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Prescription>> AddPrescription([FromBody] PrescriptionDto prescriptionDto)
+        public async Task<ActionResult<Prescription>> AddPrescription([FromBody] PrescriptionDtoInsert prescriptionDto)
         {
             var prescription = _mapper.Map<Prescription>(prescriptionDto);
             await _prescriptionRepository.AddPrescription(prescription);
@@ -46,7 +46,7 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdatePrescription(string id, PrescriptionDto prescriptionDto)
+        public async Task<ActionResult> UpdatePrescription(string id, PrescriptionDtoUpdate prescriptionDto)
         {
             var item = await _prescriptionRepository.GetOnePrescriptionById(id);
 

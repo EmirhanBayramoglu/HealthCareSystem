@@ -18,6 +18,7 @@ namespace HealthCareSystem.Repositories
         public DbSet<Doctors> Doctors { get; set; }
         public DbSet<Appointments> Appointments { get; set; }
         public DbSet<FamillyDoctorRecord> Records { get; set; }
+        public DbSet<PrescriptionLists> PrescriptionList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -36,7 +36,7 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Patients>> AddPatient([FromBody] PatientDto patientDto)
+        public async Task<ActionResult<Patients>> AddPatient([FromBody] PatientDtoInsert patientDto)
         {
             var patient = _mapper.Map<Patients>(patientDto);
             await _patientRepository.AddPatient(patient);

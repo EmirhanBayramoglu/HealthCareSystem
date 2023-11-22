@@ -5,11 +5,11 @@ using System.Numerics;
 
 namespace HealthCareSystem.Repositories
 {
-    public class FamDocHistRepository : IFamDocHistRepository
+    public class FamDocRecRepository : IFamDocRecRepository
     {
         private readonly RepositoryContext _context;
 
-        public FamDocHistRepository(RepositoryContext context)
+        public FamDocRecRepository(RepositoryContext context)
         {
             _context = context;
 

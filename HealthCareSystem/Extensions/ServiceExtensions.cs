@@ -28,5 +28,17 @@ namespace HealthCareSystem.Extensions
         public static void ConfigurePrescriptRepository(this IServiceCollection services) =>
             services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 
+        public static void ConfigureRecordRepository(this IServiceCollection services) =>
+            services.AddScoped<IFamDocRecRepository, FamDocRecRepository>();
+
+        public static void ConfigurePrescriptionListRepository(this IServiceCollection services) =>
+            services.AddScoped<IPrescriptionListRepository, PrescriptionListRepository>();
+
+        public static void ConfigurePatientToDoctorRepository(this IServiceCollection services) =>
+            services.AddScoped<DoctorRepository>();
+
+        public static void ConfigurePatientToRecordRepository(this IServiceCollection services) =>
+            services.AddScoped<FamDocRecRepository>();
+
     }
 }

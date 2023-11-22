@@ -46,7 +46,7 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UppdateMedicine(int id, MedicineDto medicineDto)
+        public async Task<ActionResult> UpdateMedicine(int id, MedicineDto medicineDto)
         {
             var item = await _medicineRepository.GetOneMedicineId(id);
 

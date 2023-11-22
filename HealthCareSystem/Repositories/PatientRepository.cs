@@ -8,21 +8,43 @@ namespace HealthCareSystem.Repositories
     public class PatientRepository : IPatientRepository
     {
         private readonly RepositoryContext _context;
+        private readonly FamDocRecRepository _docRecord;
+        private readonly DoctorRepository _doctorcontext;
 
-        public PatientRepository(RepositoryContext context)
+        public PatientRepository(RepositoryContext context, DoctorRepository doctorcontext, FamDocRecRepository docRecord)
         {
             _context = context;
-
+            _doctorcontext = doctorcontext;
+            _docRecord = docRecord;
         }
 
         public async Task AddPatient(Patients patient)
         {
+            
+
             if (patient == null)
             {
                 throw new Exception("Patient is null.");
             }
+            int docId = patient.DoctorId;
+
+            patient.Doctors = await _doctorcontext.GetOneDoctorById(docId);
+
+            if(patient.Doctors.DoctorType != "Family")
+            {
+                throw new Exception("Your entered doctor is not family doctor.");
+            }
 
             await _context.Patients.AddAsync(patient);
+
+            FamillyDoctorRecord record = new FamillyDoctorRecord
+            {
+                TcNumber = patient.TcNumber,
+                DoctorId = patient.DoctorId,
+                ChangeDate = DateTime.Now
+            };
+
+            _docRecord.AddRecords(record);
 
             await _context.SaveChangesAsync();
         }
@@ -49,7 +71,22 @@ namespace HealthCareSystem.Repositories
 
         public async Task UpdatePatient(Patients patient)
         {
+
+            if (patient.Doctors.DoctorType != "Family")
+            {
+                throw new Exception("Your entered doctor is not family doctor.");
+            }
+
             _context.Patients.Update(patient);
+
+            FamillyDoctorRecord record = new FamillyDoctorRecord
+            {
+                TcNumber = patient.TcNumber,
+                DoctorId = patient.DoctorId,
+                ChangeDate = DateTime.Now
+            };
+
+            _docRecord.AddRecords(record);
 
             await _context.SaveChangesAsync();
         }

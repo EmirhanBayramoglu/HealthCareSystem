@@ -38,7 +38,7 @@ namespace HealthCareSystem.Models
         public string PrescriptionId { get; set; } // Önceki hatalı ad düzeltildi
 
         [JsonIgnore]
-        public virtual Prescription Prescription { get; set; }
+        public ICollection<Prescription> Prescription { get; set; }
 
         [Required]
         public string AppoStatus { get; set; }
