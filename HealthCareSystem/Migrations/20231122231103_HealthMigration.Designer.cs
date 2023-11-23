@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthCareSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231122105314_HealthMigration")]
+    [Migration("20231122231103_HealthMigration")]
     partial class HealthMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,7 +135,12 @@ namespace HealthCareSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("prescriptionListId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("MedicineId");
+
+                    b.HasIndex("prescriptionListId");
 
                     b.ToTable("Medicines");
                 });
@@ -170,25 +175,48 @@ namespace HealthCareSystem.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<string>("Medicines")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("MedicinesMedicineId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PatientsTcNumber")
-                        .HasColumnType("nvarchar(11)");
+                    b.Property<long>("PrescriptionListId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("TcNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("PrescriptionId");
 
-                    b.HasIndex("PatientsTcNumber");
+                    b.HasIndex("MedicinesMedicineId");
 
                     b.HasIndex("PrescriptionId")
                         .IsUnique();
 
+                    b.HasIndex("PrescriptionListId");
+
+                    b.HasIndex("TcNumber");
+
                     b.ToTable("Prescription");
+                });
+
+            modelBuilder.Entity("HealthCareSystem.Models.PrescriptionLists", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PrescriptionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PrescriptionLists");
                 });
 
             modelBuilder.Entity("HealthCareSystem.Models.Appointments", b =>
@@ -237,6 +265,17 @@ namespace HealthCareSystem.Migrations
                     b.Navigation("Patients");
                 });
 
+            modelBuilder.Entity("HealthCareSystem.Models.Medicines", b =>
+                {
+                    b.HasOne("HealthCareSystem.Models.PrescriptionLists", "prescriptionList")
+                        .WithMany("Medicine")
+                        .HasForeignKey("prescriptionListId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("prescriptionList");
+                });
+
             modelBuilder.Entity("HealthCareSystem.Models.Patients", b =>
                 {
                     b.HasOne("HealthCareSystem.Models.Doctors", "Doctors")
@@ -250,11 +289,25 @@ namespace HealthCareSystem.Migrations
 
             modelBuilder.Entity("HealthCareSystem.Models.Prescription", b =>
                 {
-                    b.HasOne("HealthCareSystem.Models.Patients", "Patients")
+                    b.HasOne("HealthCareSystem.Models.Medicines", null)
                         .WithMany("Prescription")
-                        .HasForeignKey("PatientsTcNumber");
+                        .HasForeignKey("MedicinesMedicineId");
+
+                    b.HasOne("HealthCareSystem.Models.PrescriptionLists", "PrescriptionList")
+                        .WithMany("Prescription")
+                        .HasForeignKey("PrescriptionListId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HealthCareSystem.Models.Patients", "Patients")
+                        .WithMany()
+                        .HasForeignKey("TcNumber")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Patients");
+
+                    b.Navigation("PrescriptionList");
                 });
 
             modelBuilder.Entity("HealthCareSystem.Models.Doctors", b =>
@@ -264,17 +317,27 @@ namespace HealthCareSystem.Migrations
                     b.Navigation("Patients");
                 });
 
+            modelBuilder.Entity("HealthCareSystem.Models.Medicines", b =>
+                {
+                    b.Navigation("Prescription");
+                });
+
             modelBuilder.Entity("HealthCareSystem.Models.Patients", b =>
                 {
                     b.Navigation("Appointments");
-
-                    b.Navigation("Prescription");
                 });
 
             modelBuilder.Entity("HealthCareSystem.Models.Prescription", b =>
                 {
                     b.Navigation("Appointments")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HealthCareSystem.Models.PrescriptionLists", b =>
+                {
+                    b.Navigation("Medicine");
+
+                    b.Navigation("Prescription");
                 });
 #pragma warning restore 612, 618
         }

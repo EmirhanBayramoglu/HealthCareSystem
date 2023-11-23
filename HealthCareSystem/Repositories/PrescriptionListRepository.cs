@@ -15,23 +15,15 @@ namespace HealthCareSystem.Repositories
 
         }
 
-        public async Task AddPrescriptionList(string presctiptionId ,List<int> medicineId)
+        public async Task AddPrescriptionList(PrescriptionLists prescriptionList)
         {
-            if(medicineId == null)
+            if(prescriptionList == null)
             {
                 throw new Exception("Medicines Id is null.");
             }
 
-            foreach (var item in medicineId)
-            {
-                var medicineList = new PrescriptionLists
-                {
-                    PrescriptionId = presctiptionId,
-                    MedicineId = item
-                };
-                await _context.PrescriptionList.AddAsync(medicineList);
-            }
-            await _context.SaveChangesAsync();
+             await _context.PrescriptionList.AddAsync(prescriptionList);
+            
         }
 
         public async Task DeletePrescriptionList(long id)
@@ -59,6 +51,11 @@ namespace HealthCareSystem.Repositories
         {
             _context.PrescriptionList.Update(prescriptionList);
 
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
             await _context.SaveChangesAsync();
         }
     }

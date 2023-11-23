@@ -24,12 +24,20 @@ namespace HealthCareSystem.Repositories
         {
 
             modelBuilder.Entity<Appointments>()
-            .HasIndex(e => e.AppointmentId)
-            .IsUnique(); // Değeri benzersiz yap
+            .Property(e => e.AppointmentType)
+            .IsRequired()
+            .HasMaxLength(10);
 
-            modelBuilder.Entity<Prescription>()
-            .HasIndex(e => e.PrescriptionId)
-            .IsUnique(); // Değeri benzersiz yap
+            modelBuilder.Entity<Appointments>()
+            .HasCheckConstraint("CK_AppointmentType", "[AppointmentType] IN ('General', 'Family')");
+
+            modelBuilder.Entity<Appointments>()
+            .Property(e => e.AppoStatus)
+            .IsRequired()
+            .HasMaxLength(10);
+
+            modelBuilder.Entity<Appointments>()
+            .HasCheckConstraint("CK_AppoStatus", "[AppoStatus] IN ('Waiting', 'Active', 'Ended', 'Canceled')");
 
             // Örnek ilişkiler
 

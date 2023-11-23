@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using HealthCareSystem.Dto.AppointmentDto;
 using HealthCareSystem.Dto.DoctorDto;
+using HealthCareSystem.Dto.FamDocRecordDto;
 using HealthCareSystem.Dto.MedicineDto;
 using HealthCareSystem.Dto.PatientDto;
 using HealthCareSystem.Dto.PrescriptionDto;
+using HealthCareSystem.Dto.PrescriptionListDto;
 using HealthCareSystem.Models;
 
 namespace HealthCareSystem.Profiles
@@ -30,6 +32,14 @@ namespace HealthCareSystem.Profiles
             CreateMap<PrescriptionDtoUpdate, Prescription>().ReverseMap();
             CreateMap<Prescription, PrescriptionDto>().ReverseMap();
             CreateMap<PrescriptionDtoInsert, Prescription>();
+
+            CreateMap<PrescriptionListDtoUpdate, PrescriptionLists>().ReverseMap();
+            CreateMap<PrescriptionLists, PrescriptionListDto>().ReverseMap();
+            CreateMap<PrescriptionListDtoInsert, PrescriptionLists>();
+
+            CreateMap<FamillyDoctorRecord, FamDocRecordDto>().ReverseMap();
+            CreateMap<FamDocRecordDtoInsert, FamillyDoctorRecord>();
+
         }
     }
 }

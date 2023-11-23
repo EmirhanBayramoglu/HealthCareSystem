@@ -11,7 +11,6 @@ namespace HealthCareSystem.Models
         public long Id { get; set; }
 
         [Required]
-        [ForeignKey("Prescription")]
         public string PrescriptionId { get; set; } // Önceki hatalı ad düzeltildi
 
         [JsonIgnore]

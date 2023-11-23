@@ -26,16 +26,17 @@ namespace HealthCareSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medicines",
+                name: "PrescriptionLists",
                 columns: table => new
                 {
-                    MedicineId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MedicineName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PrescriptionId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MedicineId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Medicines", x => x.MedicineId);
+                    table.PrimaryKey("PK_PrescriptionLists", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,6 +56,26 @@ namespace HealthCareSystem.Migrations
                         column: x => x.DoctorId,
                         principalTable: "Doctors",
                         principalColumn: "DoctorId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Medicines",
+                columns: table => new
+                {
+                    MedicineId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MedicineName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    prescriptionListId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medicines", x => x.MedicineId);
+                    table.ForeignKey(
+                        name: "FK_Medicines_PrescriptionLists_prescriptionListId",
+                        column: x => x.prescriptionListId,
+                        principalTable: "PrescriptionLists",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -90,18 +111,30 @@ namespace HealthCareSystem.Migrations
                 columns: table => new
                 {
                     PrescriptionId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    TcNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PatientsTcNumber = table.Column<string>(type: "nvarchar(11)", nullable: true),
-                    Medicines = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TcNumber = table.Column<string>(type: "nvarchar(11)", nullable: false),
+                    PrescriptionListId = table.Column<long>(type: "bigint", nullable: false),
+                    MedicinesMedicineId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prescription", x => x.PrescriptionId);
                     table.ForeignKey(
-                        name: "FK_Prescription_Patients_PatientsTcNumber",
-                        column: x => x.PatientsTcNumber,
+                        name: "FK_Prescription_Medicines_MedicinesMedicineId",
+                        column: x => x.MedicinesMedicineId,
+                        principalTable: "Medicines",
+                        principalColumn: "MedicineId");
+                    table.ForeignKey(
+                        name: "FK_Prescription_Patients_TcNumber",
+                        column: x => x.TcNumber,
                         principalTable: "Patients",
-                        principalColumn: "TcNumber");
+                        principalColumn: "TcNumber",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Prescription_PrescriptionLists_PrescriptionListId",
+                        column: x => x.PrescriptionListId,
+                        principalTable: "PrescriptionLists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,20 +205,35 @@ namespace HealthCareSystem.Migrations
                 column: "TcNumber");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Medicines_prescriptionListId",
+                table: "Medicines",
+                column: "prescriptionListId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patients_DoctorId",
                 table: "Patients",
                 column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prescription_PatientsTcNumber",
+                name: "IX_Prescription_MedicinesMedicineId",
                 table: "Prescription",
-                column: "PatientsTcNumber");
+                column: "MedicinesMedicineId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescription_PrescriptionId",
                 table: "Prescription",
                 column: "PrescriptionId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prescription_PrescriptionListId",
+                table: "Prescription",
+                column: "PrescriptionListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prescription_TcNumber",
+                table: "Prescription",
+                column: "TcNumber");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -197,13 +245,16 @@ namespace HealthCareSystem.Migrations
                 name: "FamillyDoctorRecord");
 
             migrationBuilder.DropTable(
-                name: "Medicines");
-
-            migrationBuilder.DropTable(
                 name: "Prescription");
 
             migrationBuilder.DropTable(
+                name: "Medicines");
+
+            migrationBuilder.DropTable(
                 name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "PrescriptionLists");
 
             migrationBuilder.DropTable(
                 name: "Doctors");

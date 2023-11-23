@@ -6,8 +6,9 @@ namespace HealthCareSystem.Repositories.Contracts
     {
         Task<IEnumerable<PrescriptionLists>> GetAllPresctionLists();
         Task<PrescriptionLists> GetOnePrescriptionListById(long id);
-        public Task AddPrescriptionList(string presctiptionId, List<int> medicineId);
+        public Task AddPrescriptionList(PrescriptionLists prescriptionList);
         public Task UpdatePrescriptionList(PrescriptionLists prescriptionList);
         public Task DeletePrescriptionList(long id);
+        public Task SaveChangesAsync();
     }
 }
