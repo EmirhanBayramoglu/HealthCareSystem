@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthCareSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231122231103_HealthMigration")]
+    [Migration("20231123221505_HealthMigration")]
     partial class HealthMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,14 +32,16 @@ namespace HealthCareSystem.Migrations
 
                     b.Property<string>("AppoStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AppointmentType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
@@ -54,9 +56,6 @@ namespace HealthCareSystem.Migrations
 
                     b.HasKey("AppointmentId");
 
-                    b.HasIndex("AppointmentId")
-                        .IsUnique();
-
                     b.HasIndex("DoctorId");
 
                     b.HasIndex("PrescriptionId")
@@ -65,6 +64,10 @@ namespace HealthCareSystem.Migrations
                     b.HasIndex("TcNumber");
 
                     b.ToTable("Appointments");
+
+                    b.HasCheckConstraint("CK_AppoStatus", "[AppoStatus] IN ('Waiting', 'Active', 'Ended', 'Canceled')");
+
+                    b.HasCheckConstraint("CK_AppointmentType", "[AppointmentType] IN ('General', 'Family')");
                 });
 
             modelBuilder.Entity("HealthCareSystem.Models.Doctors", b =>
@@ -85,7 +88,8 @@ namespace HealthCareSystem.Migrations
 
                     b.Property<string>("DoctorType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -94,6 +98,8 @@ namespace HealthCareSystem.Migrations
                     b.HasKey("DoctorId");
 
                     b.ToTable("Doctors");
+
+                    b.HasCheckConstraint("CK_DoctorType", "[DoctorType] IN ('General', 'Family')");
                 });
 
             modelBuilder.Entity("HealthCareSystem.Models.FamillyDoctorRecord", b =>
@@ -188,9 +194,6 @@ namespace HealthCareSystem.Migrations
                     b.HasKey("PrescriptionId");
 
                     b.HasIndex("MedicinesMedicineId");
-
-                    b.HasIndex("PrescriptionId")
-                        .IsUnique();
 
                     b.HasIndex("PrescriptionListId");
 

@@ -39,6 +39,14 @@ namespace HealthCareSystem.Repositories
             modelBuilder.Entity<Appointments>()
             .HasCheckConstraint("CK_AppoStatus", "[AppoStatus] IN ('Waiting', 'Active', 'Ended', 'Canceled')");
 
+            modelBuilder.Entity<Doctors>()
+            .Property(e => e.DoctorType)
+            .IsRequired()
+            .HasMaxLength(10);
+
+            modelBuilder.Entity<Doctors>()
+            .HasCheckConstraint("CK_DoctorType", "[DoctorType] IN ('General', 'Family')");
+
             // Örnek ilişkiler
 
             if (modelBuilder == null)

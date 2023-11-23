@@ -15,7 +15,7 @@ namespace HealthCareSystem.Migrations
                 {
                     DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DoctorType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     DoctorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -23,6 +23,7 @@ namespace HealthCareSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Doctors", x => x.DoctorId);
+                    table.CheckConstraint("CK_DoctorType", "[DoctorType] IN ('General', 'Family')");
                 });
 
             migrationBuilder.CreateTable(
@@ -143,15 +144,17 @@ namespace HealthCareSystem.Migrations
                 {
                     AppointmentId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     TcNumber = table.Column<string>(type: "nvarchar(11)", nullable: false),
-                    AppointmentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppointmentType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PrescriptionId = table.Column<string>(type: "nvarchar(11)", nullable: false),
-                    AppoStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AppoStatus = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.AppointmentId);
+                    table.CheckConstraint("CK_AppoStatus", "[AppoStatus] IN ('Waiting', 'Active', 'Ended', 'Canceled')");
+                    table.CheckConstraint("CK_AppointmentType", "[AppointmentType] IN ('General', 'Family')");
                     table.ForeignKey(
                         name: "FK_Appointments_Doctors_DoctorId",
                         column: x => x.DoctorId,
@@ -171,12 +174,6 @@ namespace HealthCareSystem.Migrations
                         principalColumn: "PrescriptionId",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_AppointmentId",
-                table: "Appointments",
-                column: "AppointmentId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_DoctorId",
@@ -218,12 +215,6 @@ namespace HealthCareSystem.Migrations
                 name: "IX_Prescription_MedicinesMedicineId",
                 table: "Prescription",
                 column: "MedicinesMedicineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Prescription_PrescriptionId",
-                table: "Prescription",
-                column: "PrescriptionId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescription_PrescriptionListId",
