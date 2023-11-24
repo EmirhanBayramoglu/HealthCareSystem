@@ -26,15 +26,15 @@ namespace HealthCareSystem.Controllers
         {
             var items = await _prescriptionListRepository.GetAllPresctionLists();
 
-            return Ok(_mapper.Map<IEnumerable<Prescription>>(items));
+            return Ok(_mapper.Map<IEnumerable<PrescriptionLists>>(items));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Prescription>> GetOnePrescriptionListById(long id)
+        public async Task<ActionResult<PrescriptionLists>> GetOnePrescriptionListById(long id)
         {
             var item = await _prescriptionListRepository.GetOnePrescriptionListById(id);
 
-            return Ok(_mapper.Map<Prescription>(item));
+            return Ok(_mapper.Map<PrescriptionLists>(item));
         }
 
         [HttpPost]

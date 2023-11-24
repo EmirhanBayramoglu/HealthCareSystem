@@ -8,25 +8,39 @@ namespace HealthCareSystem.Repositories
     public class AppointmentRepository : IAppointmentRepository
     {
         private readonly RepositoryContext _context;
+        private readonly DoctorRepository _doctorRepository;
+        private readonly PatientRepository _patientRepository;
+        private readonly PrescriptionRepository _prescriptionRepository;
 
-        public AppointmentRepository(RepositoryContext context)
+        public AppointmentRepository(RepositoryContext context, DoctorRepository doctorRepository, 
+            PatientRepository patientRepository, PrescriptionRepository prescriptionRepository)
         {
             _context = context;
+            _doctorRepository = doctorRepository;
+            _patientRepository = patientRepository;
+            _prescriptionRepository = prescriptionRepository;
         }
 
         public async Task AddAppointment(Appointments appointment)
         {
+            Doctors doctor = await _doctorRepository.GetOneDoctorById(appointment.DoctorId);
+            Patients patient = await _patientRepository.GetOnePatientByTcNumber(appointment.TcNumber);
+            Prescription prescription = new Prescription
+            {
+                TcNumber = appointment.TcNumber,
+            };
+
             if (appointment == null)
             {
                 throw new Exception("Appointment is null.");
             }
             
-            if (appointment.AppointmentType != appointment.Doctors.DoctorType)
+            if (appointment.AppointmentType != doctor.DoctorType)
             {
                 throw new Exception("Appointment type and Doctor type is not match.");
             }
 
-            if ((appointment.DoctorId != appointment.Patients.DoctorId) && appointment.AppointmentType == "Family")
+            if ((appointment.DoctorId != patient.DoctorId) && appointment.AppointmentType == "Family")
             {
                 throw new Exception("This doctor is not your family doctor");
             }
@@ -36,15 +50,20 @@ namespace HealthCareSystem.Repositories
 
             if(hour > 7 &&  hour < 18) 
             {
-                throw new Exception("Hour must between 7 and 18 (7 and 18 except)");
-                if (min == 0 || min == 30) 
+                if (min != 0 && min != 30) 
                 {
                     throw new Exception("Time must be exact hour or half of hour");
                 }
             }
+            else
+            {
+                throw new Exception("Hour must between 7 and 18 (7 and 18 except)");
+            } 
 
-            var existingAppointmentDate = _context.Appointments.Where(x => x.AppointmentDate == appointment.AppointmentDate 
-                                                                        && x.DoctorId == appointment.DoctorId);
+
+            var existingAppointmentDate = _context.Appointments
+                                            .Where(x => x.AppointmentDate == appointment.AppointmentDate && x.DoctorId == appointment.DoctorId)
+                                            .FirstOrDefault();
 
             if (existingAppointmentDate != null)
             {
@@ -52,7 +71,17 @@ namespace HealthCareSystem.Repositories
             }
 
             appointment.AppoStatus = "Waiting";
-            
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+            var random = new Random();
+            var alphanumericId = new string(Enumerable.Repeat(chars, 11)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            _prescriptionRepository.AddPrescription(prescription);
+
+            appointment.AppointmentId = alphanumericId;
+            appointment.PrescriptionId = prescription.PrescriptionId;
 
             await _context.Appointments.AddAsync(appointment);
 

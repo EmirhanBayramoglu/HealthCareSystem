@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using static HealthCareSystem.Models.Doctors;
 
@@ -34,8 +35,9 @@ namespace HealthCareSystem.Models
         [Required]
         public DateTime AppointmentDate { get; set; }
 
+        [AllowNull]
         [ForeignKey("Prescription")]
-        public string PrescriptionId { get; set; } // Önceki hatalı ad düzeltildi
+        public string? PrescriptionId { get; set; } // Önceki hatalı ad düzeltildi
 
         [JsonIgnore]
         public virtual Prescription Prescription { get; set; }

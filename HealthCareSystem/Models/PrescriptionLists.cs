@@ -10,17 +10,21 @@ namespace HealthCareSystem.Models
         [Required]
         public long Id { get; set; }
 
+        [ForeignKey("Prescription")]
         [Required]
         public string PrescriptionId { get; set; } // Önceki hatalı ad düzeltildi
 
         [JsonIgnore]
-        public ICollection<Prescription> Prescription { get; set; }
+        public virtual Prescription Prescription { get; set; }
 
         [Required]
         [ForeignKey("Medicines")]
         public int MedicineId { get; set; }
 
         [JsonIgnore]
-        public ICollection<Medicines> Medicine { get; set; }
+        public Medicines Medicines { get; set; }
+
+        /*[JsonIgnore]
+        public ICollection<PrescriptionLists> PrescriptionList { get; set; }*/
     }
 }

@@ -46,7 +46,7 @@ namespace HealthCareSystem.Repositories
 
             _docRecord.AddRecords(record);
 
-            await _context.SaveChangesAsync();
+            // await _context.SaveChangesAsync();
         }
 
         public async Task DeletePatient(string id)
@@ -71,8 +71,8 @@ namespace HealthCareSystem.Repositories
 
         public async Task UpdatePatient(Patients patient)
         {
-
-            if (patient.Doctors.DoctorType != "Family")
+            Doctors doctor = await _doctorcontext.GetOneDoctorById(patient.DoctorId);
+            if (doctor.DoctorType != "Family")
             {
                 throw new Exception("Your entered doctor is not family doctor.");
             }

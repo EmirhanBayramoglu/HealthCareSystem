@@ -26,7 +26,7 @@ namespace HealthCareSystem.Controllers
         {
             var items = await _famDocRecRepository.GetAllRecords();
 
-            return Ok(_mapper.Map<IEnumerable<Prescription>>(items));
+            return Ok(_mapper.Map<IEnumerable<FamillyDoctorRecord>>(items));
         }
 
         [HttpPost]

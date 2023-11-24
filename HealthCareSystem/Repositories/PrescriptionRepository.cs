@@ -20,7 +20,15 @@ namespace HealthCareSystem.Repositories
         {
             if (prescription == null)
                 throw new Exception("Prescription is null.");
-          
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            
+            var random = new Random();
+            var alphanumericId = new string(Enumerable.Repeat(chars, 11)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            prescription.PrescriptionId = alphanumericId;
+
             await _context.Prescription.AddAsync(prescription);
             await _context.SaveChangesAsync();
         }

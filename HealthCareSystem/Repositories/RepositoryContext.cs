@@ -23,6 +23,10 @@ namespace HealthCareSystem.Repositories
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            modelBuilder.Entity<Prescription>()
+            .Property(p => p.PrescriptionId)
+            .HasDefaultValueSql("NEWID()"); 
+
             modelBuilder.Entity<Appointments>()
             .Property(e => e.AppointmentType)
             .IsRequired()

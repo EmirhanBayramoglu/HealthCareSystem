@@ -16,6 +16,6 @@ namespace HealthCareSystem.Models
         public ICollection<Prescription> Prescription { get; set; }
 
         [JsonIgnore]
-        public PrescriptionLists prescriptionList { get; set; }
+        public ICollection<PrescriptionLists> PrescriptionList { get; set; }
     }
 }
