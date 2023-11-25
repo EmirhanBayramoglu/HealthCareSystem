@@ -4,6 +4,7 @@ using HealthCareSystem.Dto.PrescriptionDto;
 using HealthCareSystem.Models;
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Models.RequestParameters;
 
 namespace HealthCareSystem.Controllers
 {
@@ -22,9 +23,9 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllAppointments()
+        public async Task<ActionResult> GetAllAppointments([FromQuery]AppointmentParameters appointmentParameters)
         {
-            var items = await _appointmentRepository.GetAllAppointments();
+            var items = await _appointmentRepository.GetAllAppointments(appointmentParameters);
 
             return Ok(_mapper.Map<IEnumerable<Appointments>>(items));
         }

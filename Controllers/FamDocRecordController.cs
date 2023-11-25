@@ -5,6 +5,7 @@ using HealthCareSystem.Models;
 using HealthCareSystem.Repositories;
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Models.RequestFeatures;
 
 namespace HealthCareSystem.Controllers
 {
@@ -22,9 +23,9 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllFamDocRecord()
+        public async Task<ActionResult> GetAllFamDocRecord([FromQuery] RecordParameters recordParameters)
         {
-            var items = await _famDocRecRepository.GetAllRecords();
+            var items = await _famDocRecRepository.GetAllRecords(recordParameters);
 
             return Ok(_mapper.Map<IEnumerable<FamillyDoctorRecord>>(items));
         }

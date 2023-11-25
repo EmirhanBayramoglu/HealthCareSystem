@@ -1,6 +1,8 @@
-﻿using HealthCareSystem.Models;
+﻿using Extensions;
+using HealthCareSystem.Models;
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Models.RequestParameters;
 
 namespace HealthCareSystem.Repositories
 {
@@ -98,9 +100,9 @@ namespace HealthCareSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Appointments>> GetAllAppointments()
+        public async Task<IEnumerable<Appointments>> GetAllAppointments(AppointmentParameters appointmentParameters)
         {
-            return await _context.Appointments.OrderBy(x => x.AppointmentId).ToListAsync();
+            return await _context.Appointments.Search(appointmentParameters.doctorId, appointmentParameters.appoStatus).OrderBy(x => x.AppointmentId).ToListAsync();
         }
 
         public async Task<Appointments> GetOneAppointmentById(string appointmentId)

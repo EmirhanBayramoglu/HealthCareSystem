@@ -5,6 +5,7 @@ using HealthCareSystem.Models;
 using HealthCareSystem.Repositories;
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Models.RequestFeatures;
 
 namespace HealthCareSystem.Controllers
 {
@@ -22,9 +23,9 @@ namespace HealthCareSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllPrescriptionList()
+        public async Task<ActionResult> GetAllPrescriptionList([FromQuery] PrescriptionListParameters prescriptionListParameters)
         {
-            var items = await _prescriptionListRepository.GetAllPresctionLists();
+            var items = await _prescriptionListRepository.GetAllPresctionLists(prescriptionListParameters);
 
             return Ok(_mapper.Map<IEnumerable<PrescriptionLists>>(items));
         }

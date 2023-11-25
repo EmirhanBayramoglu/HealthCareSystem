@@ -2,6 +2,9 @@
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System.Numerics;
+using Models.RequestParameters;
+using Models.RequestFeatures;
+using Repository.Extensions;
 
 namespace HealthCareSystem.Repositories
 {
@@ -27,9 +30,9 @@ namespace HealthCareSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<FamillyDoctorRecord>> GetAllRecords()
+        public async Task<IEnumerable<FamillyDoctorRecord>> GetAllRecords(RecordParameters recordParameters)
         {
-            return await _context.Records.OrderBy(x => x.RecordNo).ToListAsync();
+            return await _context.Records.Search(recordParameters.doctorId, recordParameters.tcNumber).OrderBy(x => x.RecordNo).ToListAsync();
         }
 
     }

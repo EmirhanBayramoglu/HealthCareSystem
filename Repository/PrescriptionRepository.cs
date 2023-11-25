@@ -1,8 +1,11 @@
 ﻿using HealthCareSystem.Models;
 using HealthCareSystem.Repositories.Contracts;
+using Models.RequestParameters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using System.Text.RegularExpressions;
+using Models.RequestFeatures;
+using Repository.Extensions;
 
 namespace HealthCareSystem.Repositories
 {
@@ -43,9 +46,9 @@ namespace HealthCareSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Prescription>> GetAllPresctions()
+        public async Task<IEnumerable<Prescription>> GetAllPresctions(PrescriptionParameters prescriptionParameters)
         {
-            return await _context.Prescription.OrderBy(x => x.PrescriptionId).ToListAsync();
+            return await _context.Prescription.Search(prescriptionParameters.tcNumber).OrderBy(x => x.PrescriptionId).ToListAsync();
         }
 
         public async Task<Prescription> GetOnePrescriptionById(string id)
