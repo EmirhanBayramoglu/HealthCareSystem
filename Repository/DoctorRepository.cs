@@ -35,6 +35,10 @@ namespace HealthCareSystem.Repositories
             if (doctor == null)
                 throw new Exception("Doctor is null.");
 
+            //Doctorun silinmesi daha sonradan verilerin araştırılmasında sorun çıkarabileceği için sadece pasif duruma aldım
+            //Eğer doctor silindiğinde FK olarak bulunduğu entitylerin silinmemesini istiyorsan o kod RepositoryContext içinde bulunuyor
+            //Sadece alt kısımdaki Update kısmını Remove ile değiştirmek yeterlidir
+
             doctor.Status = "Pasif";
             _context.Doctors.Update(doctor);
             await _context.SaveChangesAsync();

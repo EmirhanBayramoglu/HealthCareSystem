@@ -58,5 +58,13 @@ namespace HealthCareSystem.Controllers
             return Ok();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteDoctor(int id)
+        {
+            await _doctorRepository.DeleteDoctor(id);
+
+            return Ok();
+        }
+
     }
 }

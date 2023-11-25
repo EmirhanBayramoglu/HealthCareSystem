@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HealthCareSystem.Dto.PatientDto;
 using HealthCareSystem.Models;
+using HealthCareSystem.Repositories;
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,14 @@ namespace HealthCareSystem.Controllers
             _mapper.Map(patientDto, item);
 
             await _patientRepository.UpdatePatient(item);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePatient(string id)
+        {
+            await _patientRepository.DeletePatient(id);
 
             return Ok();
         }

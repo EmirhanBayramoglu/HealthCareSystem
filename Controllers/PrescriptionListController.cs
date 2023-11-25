@@ -64,5 +64,13 @@ namespace HealthCareSystem.Controllers
             return Ok();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePrescriptionList(long id)
+        {
+            await _prescriptionListRepository.DeletePrescriptionList(id);
+
+            return Ok();
+        }
+
     }
 }

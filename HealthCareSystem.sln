@@ -5,17 +5,15 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthCareSystem", "HealthCareSystem\HealthCareSystem.csproj", "{73E89625-AEE4-43C5-9269-D9796DB97A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{0E1F40DF-93A5-4C86-8EE0-B0B74DE5855F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{0E1F40DF-93A5-4C86-8EE0-B0B74DE5855F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Controllers\Controllers.csproj", "{710EE5B0-A7F4-4380-BB65-E5949691C51B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controllers", "Controllers\Controllers.csproj", "{710EE5B0-A7F4-4380-BB65-E5949691C51B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dto", "Dto\Dto.csproj", "{2915D072-3B52-4FC6-B440-856331C38FD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dto", "Dto\Dto.csproj", "{2915D072-3B52-4FC6-B440-856331C38FD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{BE082D88-A944-462E-89C4-6E82668224F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions", "Extensions\Extensions.csproj", "{BE082D88-A944-462E-89C4-6E82668224F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{290A501A-5628-471D-A2B7-2A0C6CE789C6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiles", "Profiles\Profiles.csproj", "{F120EC26-4294-43A7-AD2A-0A49362FCA9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{290A501A-5628-471D-A2B7-2A0C6CE789C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +45,6 @@ Global
 		{290A501A-5628-471D-A2B7-2A0C6CE789C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{290A501A-5628-471D-A2B7-2A0C6CE789C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{290A501A-5628-471D-A2B7-2A0C6CE789C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F120EC26-4294-43A7-AD2A-0A49362FCA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F120EC26-4294-43A7-AD2A-0A49362FCA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F120EC26-4294-43A7-AD2A-0A49362FCA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F120EC26-4294-43A7-AD2A-0A49362FCA9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

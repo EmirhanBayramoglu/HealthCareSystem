@@ -74,15 +74,21 @@ namespace HealthCareSystem.Repositories
 
             appointment.AppoStatus = "Waiting";
 
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string alphanumericId;
+            do
+            {
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-            var random = new Random();
-            var alphanumericId = new string(Enumerable.Repeat(chars, 11)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
+                var random = new Random();
+                alphanumericId = new string(Enumerable.Repeat(chars, 11)
+                    .Select(s => s[random.Next(s.Length)]).ToArray());
+            } while (null == GetOneAppointmentById(alphanumericId));
+            
 
             _prescriptionRepository.AddPrescription(prescription);
 
             appointment.AppointmentId = alphanumericId;
+
             appointment.PrescriptionId = prescription.PrescriptionId;
 
             await _context.Appointments.AddAsync(appointment);

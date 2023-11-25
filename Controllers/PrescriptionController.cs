@@ -2,6 +2,7 @@
 using HealthCareSystem.Dto.MedicineDto;
 using HealthCareSystem.Dto.PrescriptionDto;
 using HealthCareSystem.Models;
+using HealthCareSystem.Repositories;
 using HealthCareSystem.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Models.RequestFeatures;
@@ -54,6 +55,14 @@ namespace HealthCareSystem.Controllers
             _mapper.Map(prescriptionDto, item);
 
             await _prescriptionRepository.UpdatePrescription(item);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePrescription(string id)
+        {
+            await _prescriptionRepository.DeletePrescription(id);
 
             return Ok();
         }
