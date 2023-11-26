@@ -43,7 +43,7 @@ namespace HealthCareSystem.Controllers
         {
             var appointment = _mapper.Map<Appointments>(appointmentDto);
             await _appointmentRepository.AddAppointment(appointment);
-            return Ok();
+            return Ok(appointment);
         }
 
         [HttpPut("{id}")]
@@ -55,7 +55,7 @@ namespace HealthCareSystem.Controllers
 
             await _appointmentRepository.UpdateAppointment(item);
 
-            return Ok();
+            return Ok(item);
         }
 
     }

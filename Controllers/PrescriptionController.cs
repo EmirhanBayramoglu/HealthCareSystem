@@ -44,7 +44,7 @@ namespace HealthCareSystem.Controllers
         {
             var prescription = _mapper.Map<Prescription>(prescriptionDto);
             await _prescriptionRepository.AddPrescription(prescription);
-            return Ok();
+            return Ok(prescription);
         }
 
         [HttpPut("{id}")]
@@ -56,7 +56,7 @@ namespace HealthCareSystem.Controllers
 
             await _prescriptionRepository.UpdatePrescription(item);
 
-            return Ok();
+            return Ok(item);
         }
 
         [HttpDelete("{id}")]

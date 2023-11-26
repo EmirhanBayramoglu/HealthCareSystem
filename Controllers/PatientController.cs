@@ -41,7 +41,7 @@ namespace HealthCareSystem.Controllers
         {
             var patient = _mapper.Map<Patients>(patientDto);
             await _patientRepository.AddPatient(patient);
-            return Ok();
+            return Ok(patient);
         }
 
         [HttpPut("{tcNumber}")]
@@ -53,7 +53,7 @@ namespace HealthCareSystem.Controllers
 
             await _patientRepository.UpdatePatient(item);
 
-            return Ok();
+            return Ok(item);
         }
 
         [HttpDelete("{id}")]

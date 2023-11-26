@@ -87,8 +87,6 @@ namespace HealthCareSystem.Repositories
             };
 
             _docRecord.AddRecords(record);
-
-            await _context.SaveChangesAsync();
         }
     }
 }
