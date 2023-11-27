@@ -37,6 +37,7 @@ namespace HealthCareSystem.Repositories
 
             await _context.Patients.AddAsync(patient);
 
+            //eklenen family doctor ile ilgili kayıt eklendi
             FamillyDoctorRecord record = new FamillyDoctorRecord
             {
                 TcNumber = patient.TcNumber,
@@ -79,6 +80,7 @@ namespace HealthCareSystem.Repositories
 
             _context.Patients.Update(patient);
 
+            //eklenen family doctor ile ilgili kayıt eklenir
             FamillyDoctorRecord record = new FamillyDoctorRecord
             {
                 TcNumber = patient.TcNumber,

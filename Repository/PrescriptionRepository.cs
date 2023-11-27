@@ -26,6 +26,7 @@ namespace HealthCareSystem.Repositories
 
             string alphanumericId;
 
+            //rastgele daha önce kullanılmamış bir alphanumericId oluşturulmasını sağlar
             do
             {
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

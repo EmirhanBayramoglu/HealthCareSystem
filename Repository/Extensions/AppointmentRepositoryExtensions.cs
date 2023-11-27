@@ -9,16 +9,18 @@ namespace Extensions
 {
     public static class AppointmentRepositoryExtensions
     {
+
+        //doktorlar kendilerine ait ve "waiting" durumundaki randevuları bulup onları güncelleyebilir
+        //(doctorId ve randevu durumuna göre aratma yapar)
         public static IQueryable<Appointments> Search(this IQueryable<Appointments> appointments, string doctorId, string appoStatus)
         {
             string lowerCaseTermId;
             string lowerCaseTermStatus;
 
-            // İki parametreden herhangi biri boşsa, orijinal koleksiyonu döndür
+            
             if (string.IsNullOrWhiteSpace(doctorId) && string.IsNullOrWhiteSpace(appoStatus))
                 return appointments;
 
-            // İki parametreden biri boşsa, sadece diğer parametreye göre filtreleme yap
             if (string.IsNullOrWhiteSpace(doctorId))
             {
                  lowerCaseTermStatus = appoStatus.Trim().ToLower();

@@ -22,7 +22,7 @@ namespace HealthCareSystem.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            //unique değer için ayarlama
             modelBuilder.Entity<Prescription>()
             .Property(p => p.PrescriptionId)
             .HasDefaultValueSql("NEWID()"); 
@@ -31,7 +31,7 @@ namespace HealthCareSystem.Repositories
             .Property(e => e.AppointmentType)
             .IsRequired()
             .HasMaxLength(10);
-
+            //AppointmentType özelliğinin sadece "General" ve "Family" değerlerini alabilmesini sağlar
             modelBuilder.Entity<Appointments>()
             .HasCheckConstraint("CK_AppointmentType", "[AppointmentType] IN ('General', 'Family')");
 
@@ -39,7 +39,7 @@ namespace HealthCareSystem.Repositories
             .Property(e => e.AppoStatus)
             .IsRequired()
             .HasMaxLength(10);
-
+            //AppoStatus özelliğinin sadece 'Waiting', 'Active', 'Ended', 'Canceled' değerlerini alabilmesini sağlar
             modelBuilder.Entity<Appointments>()
             .HasCheckConstraint("CK_AppoStatus", "[AppoStatus] IN ('Waiting', 'Active', 'Ended', 'Canceled')");
 
@@ -47,7 +47,7 @@ namespace HealthCareSystem.Repositories
             .Property(e => e.DoctorType)
             .IsRequired()
             .HasMaxLength(10);
-
+            //CK_DoctorType özelliğinin sadece "General" ve "Family" değerlerini alabilmesini sağlar
             modelBuilder.Entity<Doctors>()
             .HasCheckConstraint("CK_DoctorType", "[DoctorType] IN ('General', 'Family')");
 
@@ -63,6 +63,7 @@ namespace HealthCareSystem.Repositories
                 entityType.SetTableName(entityType.DisplayName());
 
                 // equivalent of modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+                //Fk bağlantılarında bir verinin silinmesi durumunda sorun çıkmaması için eklenen özellik
                 entityType.GetForeignKeys()
                     .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade)
                     .ToList()

@@ -10,6 +10,8 @@ namespace Repository.Extensions
     public static class RecordRepositoryExtensions
     {
 
+        //Doctorun hangi kişilere family doctorluk yaptığını arayabilir ve
+        //bir kişinin geçmiş-şuanki tüm family doktorlarına bakabiliriz
         public static IQueryable<FamillyDoctorRecord> Search(this IQueryable<FamillyDoctorRecord> records, string doctorId, string tcNumber)
         {
             // İki parametreden herhangi biri boşsa, orijinal koleksiyonu döndür

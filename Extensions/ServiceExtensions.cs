@@ -34,6 +34,8 @@ namespace HealthCareSystem.Extensions
         public static void ConfigurePrescriptionListRepository(this IServiceCollection services) =>
             services.AddScoped<IPrescriptionListRepository, PrescriptionListRepository>();
 
+
+        //alttaki 4 işlemi diğer repo dosyaları içerisindeki fonksiyonları diğer repolar içerisinde de kullanmak için yaptım
         public static void ConfigurePatientToDoctorRepository(this IServiceCollection services) =>
             services.AddScoped<DoctorRepository>();
 

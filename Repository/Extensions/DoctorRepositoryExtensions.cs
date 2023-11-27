@@ -10,6 +10,7 @@ namespace Repository.Extensions
     public static class DoctorRepositoryExtensions
     {
 
+        //Doctorları durumuna(Aktif yada Pasif) ve türüne(Family yada General) göre arama yapmamızı sağlar
         public static IQueryable<Doctors> Search(this IQueryable<Doctors> doctors, string doctorType, string doctorStatus)
         {
             // İki parametreden herhangi biri boşsa, orijinal koleksiyonu döndür

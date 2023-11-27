@@ -74,6 +74,8 @@ namespace HealthCareSystem.Repositories
 
             appointment.AppoStatus = "Waiting";
 
+            //rastgele daha önce kullanılmamış bir alphanumericId oluşturulmasını sağlar
+
             string alphanumericId;
             do
             {
@@ -84,7 +86,7 @@ namespace HealthCareSystem.Repositories
                     .Select(s => s[random.Next(s.Length)]).ToArray());
             } while (null == GetOneAppointmentById(alphanumericId));
             
-
+            //randevu oluşturulduğunda randevuya otomatik olarak reçete oluşturulur doktor ihtiyaca göre bu reçeteye ilaç yazar
             _prescriptionRepository.AddPrescription(prescription);
 
             appointment.AppointmentId = alphanumericId;

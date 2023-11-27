@@ -41,13 +41,14 @@ namespace HealthCareSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<PrescriptionLists>> AddPrescription([FromBody] PrescriptionListDtoInsert[] prescriptionListDtoInserts)
         {
+            //List olarak alır eklenecek ilaçları ve ekler
             foreach(var item in prescriptionListDtoInserts)
             {
                 var prescriptionList = _mapper.Map<PrescriptionLists>(item);
             
                 await _prescriptionListRepository.AddPrescriptionList(prescriptionList);
             }
-
+            //ayrı ayrı save yapmamak için add içerisine değil bu kısma save ekledim
             await _prescriptionListRepository.SaveChangesAsync();
             return Ok();
         }

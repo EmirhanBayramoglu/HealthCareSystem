@@ -9,7 +9,7 @@ namespace Repository.Extensions
 {
     public static class PrescriptionListRepositoryExtension
     {
-
+        //Kişiye ait reçeteleri bulmak için reçeteleri tcnumber değişkenine göre aramamızı sağlar
         public static IQueryable<Prescription> Search(this IQueryable<Prescription> prescription, string tcNumber)
         {
 
