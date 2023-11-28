@@ -3,10 +3,12 @@ using HealthCareSystem.Dto.PatientDto;
 using HealthCareSystem.Models;
 using HealthCareSystem.Repositories;
 using HealthCareSystem.Repositories.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthCareSystem.Controllers
 {
+    
     [Route("api/patient")]
     [ApiController]
     public class PatientController : ControllerBase
@@ -20,6 +22,7 @@ namespace HealthCareSystem.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Doctor, Admin")]
         [HttpGet]
         public async Task<ActionResult> GetAllPatients()
         {
@@ -28,6 +31,7 @@ namespace HealthCareSystem.Controllers
             return Ok(_mapper.Map<IEnumerable<Patients>>(items));
         }
 
+        [Authorize(Roles = "User, Doctor, Admin")]
         [HttpGet("{tcNumber}")]
         public async Task<ActionResult<Patients>> GetOnePatientByTcNumber(string tcNumber)
         {
@@ -36,6 +40,7 @@ namespace HealthCareSystem.Controllers
             return Ok(_mapper.Map<Patients>(item));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Patients>> AddPatient([FromBody] PatientDtoInsert patientDto)
         {
@@ -44,6 +49,7 @@ namespace HealthCareSystem.Controllers
             return Ok(patient);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{tcNumber}")]
         public async Task<ActionResult> UpdatePatient(string tcNumber, PatientDtoUpdate patientDto)
         {
@@ -56,6 +62,7 @@ namespace HealthCareSystem.Controllers
             return Ok(item);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePatient(string id)
         {

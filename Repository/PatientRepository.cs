@@ -47,7 +47,7 @@ namespace HealthCareSystem.Repositories
 
             _docRecord.AddRecords(record);
 
-            // await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeletePatient(string id)
@@ -89,6 +89,8 @@ namespace HealthCareSystem.Repositories
             };
 
             _docRecord.AddRecords(record);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

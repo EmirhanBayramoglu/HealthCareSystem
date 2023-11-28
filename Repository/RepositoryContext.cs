@@ -1,10 +1,13 @@
 ﻿using HealthCareSystem.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Models.Auth;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace HealthCareSystem.Repositories
 {
-    public class RepositoryContext : DbContext
+    public class RepositoryContext : IdentityDbContext<User>
     {
         public RepositoryContext(DbContextOptions opt) :
             base(opt)
@@ -71,8 +74,8 @@ namespace HealthCareSystem.Repositories
             }
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            
         }
     }
 }

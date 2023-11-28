@@ -3,6 +3,7 @@ using HealthCareSystem.Dto.AppointmentDto;
 using HealthCareSystem.Dto.PrescriptionDto;
 using HealthCareSystem.Models;
 using HealthCareSystem.Repositories.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.RequestParameters;
 
@@ -22,6 +23,7 @@ namespace HealthCareSystem.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin, Doctor, User")]
         [HttpGet]
         public async Task<ActionResult> GetAllAppointments([FromQuery]AppointmentParameters appointmentParameters)
         {
@@ -30,6 +32,7 @@ namespace HealthCareSystem.Controllers
             return Ok(_mapper.Map<IEnumerable<Appointments>>(items));
         }
 
+        [Authorize(Roles = "Admin, Doctor, User")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointments>> GetOneAppointmentById(string id)
         {
@@ -38,6 +41,7 @@ namespace HealthCareSystem.Controllers
             return Ok(_mapper.Map<Appointments>(item));
         }
 
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<ActionResult<Appointments>> AddAppointment([FromBody] AppointmentDtoInsert appointmentDto)
         {
@@ -46,6 +50,7 @@ namespace HealthCareSystem.Controllers
             return Ok(appointment);
         }
 
+        [Authorize(Roles = "Admin, Doctor")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAppointment(string id, AppointmentDtoUpdate appointmentDto)
         {

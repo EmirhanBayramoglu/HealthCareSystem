@@ -23,6 +23,10 @@ builder.Services.ConfigurePatientToRecordRepository();
 builder.Services.ConfigurePrescriptionListRepository();
 builder.Services.ConfigurePatientToAppointmentRepository();
 builder.Services.ConfigurePrescriptionToAppointmentRepository();
+builder.Services.ConfigureAuthenticationSystem();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(builder.Configuration);
+
 
 var app = builder.Build();
 
@@ -35,6 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

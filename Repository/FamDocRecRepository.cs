@@ -26,8 +26,6 @@ namespace HealthCareSystem.Repositories
             }
 
             await _context.Records.AddAsync(record);
-
-            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<FamillyDoctorRecord>> GetAllRecords(RecordParameters recordParameters)
