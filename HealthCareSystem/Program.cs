@@ -12,6 +12,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureSqlContext(builder.Configuration);
+
 builder.Services.ConfigureAppointRepository();
 builder.Services.ConfigureDoctorRepository();
 builder.Services.ConfigureMedicineRepository();
@@ -23,6 +24,7 @@ builder.Services.ConfigurePatientToRecordRepository();
 builder.Services.ConfigurePrescriptionListRepository();
 builder.Services.ConfigurePatientToAppointmentRepository();
 builder.Services.ConfigurePrescriptionToAppointmentRepository();
+
 builder.Services.ConfigureAuthenticationSystem();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);

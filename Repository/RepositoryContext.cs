@@ -34,6 +34,7 @@ namespace HealthCareSystem.Repositories
             .Property(e => e.AppointmentType)
             .IsRequired()
             .HasMaxLength(10);
+
             //AppointmentType özelliğinin sadece "General" ve "Family" değerlerini alabilmesini sağlar
             modelBuilder.Entity<Appointments>()
             .HasCheckConstraint("CK_AppointmentType", "[AppointmentType] IN ('General', 'Family')");
@@ -42,6 +43,7 @@ namespace HealthCareSystem.Repositories
             .Property(e => e.AppoStatus)
             .IsRequired()
             .HasMaxLength(10);
+
             //AppoStatus özelliğinin sadece 'Waiting', 'Active', 'Ended', 'Canceled' değerlerini alabilmesini sağlar
             modelBuilder.Entity<Appointments>()
             .HasCheckConstraint("CK_AppoStatus", "[AppoStatus] IN ('Waiting', 'Active', 'Ended', 'Canceled')");
